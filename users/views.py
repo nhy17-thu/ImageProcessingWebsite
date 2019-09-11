@@ -85,7 +85,6 @@ def login(request):
 	return render(request, 'users/login.html', {'userform': userform})
 
 
-# todo：执行前检查用户身份，用request.session
 def show_pic(request, pic_id):
 	if request.session.get("has_login", False):
 		try:
@@ -100,10 +99,10 @@ def show_pic(request, pic_id):
 			print(e)
 			return django.http.HttpResponse(str(e))
 	else:
-		print("please login with your own session")
+		return HttpResponse("please login with your own session")
 
 
-# 展示id对应图片的处理结果
+# 展示id对应图片的Detection处理结果
 def show_result(request, pic_id):
 	if request.session.get("has_login", False):
 		try:
@@ -117,13 +116,34 @@ def show_result(request, pic_id):
 			with open(res_path, 'rb') as image:
 				image_data = image.read()
 			# 使用文件流，从服务器后台发送处理结果（二进制数据）到网页
-			return django.http.HttpResponse(image_data, content_type='image/png')
+			return HttpResponse(image_data, content_type='image/png')
 		except Exception as e:
-
 			print(e)
-			return django.http.HttpResponse(str(e))
+			return HttpResponse(str(e))
 	else:
-		print("please login with your own session")
+		return HttpResponse("please login with your own session")
+
+
+# 展示id对应图片的风格迁移结果
+def show_result_transfer(request, pic_id):
+	if request.session.get("has_login", False):
+		try:
+			pic = Pic.objects.get(pk=pic_id)
+			res_path = os.path.join("media/" + str(pic.transfer))
+
+			while not os.path.exists(res_path):
+				# 每隔0.1秒检查一次输出文件是否存在，若已输出则返回相应结果
+				time.sleep(0.1)
+
+			with open(res_path, 'rb') as image:
+				image_data = image.read()
+			# 使用文件流，从服务器后台发送处理结果（二进制数据）到网页
+			return HttpResponse(image_data, content_type='image/png')
+		except Exception as e:
+			print(e)
+			return HttpResponse(str(e))
+	else:
+		return HttpResponse("please login with your own session")
 
 
 # 使用AJAX动态返回表单
@@ -155,13 +175,13 @@ def check_records(request, page):
 				records = paginator.page(paginator.num_pages)
 			except InvalidPage:
 				# 如果请求的页数不存在，重定向页面
-				return django.http.HttpResponse('找不到页面内容')
+				return HttpResponse('找不到页面内容')
 
 			template_view = 'users/check_record.html'
 
 			return render(request, template_view, {'records': records})
 	else:
-		print("please login with your own session")
+		return HttpResponse("please login with your own session")
 
 
 # 按照日期范围查询记录
@@ -199,12 +219,12 @@ def search(request, page):
 			records = paginator.page(paginator.num_pages)
 		except InvalidPage:
 			# 如果请求的页数不存在，重定向页面
-			return django.http.HttpResponse('找不到页面内容')
+			return HttpResponse('找不到页面内容')
 
 		return render(request, 'users/check_record.html',
 		              {'records': records, 'searched': True, 'start_date': start_date_str, 'end_date': end_date_str})
 	else:
-		print("please login with your own session")
+		return HttpResponse("please login with your own session")
 
 
 # empty file and url will make it buggy
@@ -266,7 +286,7 @@ def upload_and_view(request):
 			form = PicForm
 			context['form'] = form
 	else:
-		print("please login with your own session")
+		return HttpResponse("please login with your own session")
 	return render(request, 'users/upload_and_view.html', context)
 
 
@@ -278,9 +298,9 @@ def delete(request, pic_id):
 			return check_records(request, 1)
 
 		except ObjectDoesNotExist as e:
-			return django.http.HttpResponse(e)
+			return HttpResponse(e)
 	else:
-		print("please login with your own session")
+		return HttpResponse("please login with your own session")
 
 
 def delete_batch(request):
@@ -296,17 +316,31 @@ def delete_batch(request):
 				update_date = datetime.datetime.strptime(record.timestamp, '%Y-%m-%d %H:%M:%S').date()
 				if start_date <= update_date <= end_date:
 					record.delete()
+		return HttpResponse('批量删除成功！')
 	else:
-		print("please login with your own session")
-	return django.http.HttpResponse('批量删除成功！')
+		return HttpResponse("please login with your own session")
 
 
-# todo: 在查询记录页面添加查看处理结果的功能（渲染新页面）
-def review_result():
-	pass
+# 渲染新页面以查看所有处理结果
+def review_result(request, pic_id):
+	if request.session.get("has_login", False):
+		try:
+			pic = Pic.objects.get(id=pic_id)
+			context = {
+				'pic_id': pic_id,
+				'classification18': pic.classification18,
+				'classification152': pic.classification152
+			}
+			return render(request, 'users/review_result.html', context)
+		except ObjectDoesNotExist as e:
+			return HttpResponse(e)
+		except Exception as e:
+			return HttpResponse(e)
+	else:
+		return HttpResponse("please login with your own session")
 
 
-# todo: 改变图片结果渲染方式，先渲染出前端网页以后再等待结果生成
+# todo: 改变图片结果渲染方式，先渲染出前端网页，然后再等待结果生成
 # todo: 添加ResNet-152的大图多类别分类
 # todo: 添加用于风格转换的深度神经网络
 
