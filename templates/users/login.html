@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>login</title>
+</head>
+
+<body>
+<h1>login page</h1>
+<form method = 'post' enctype="multipart/form-data">
+    {% csrf_token %}
+    {{userform.as_p}}
+    <input type="submit" value = "ok" />
+</form>
+</body>
+</html>

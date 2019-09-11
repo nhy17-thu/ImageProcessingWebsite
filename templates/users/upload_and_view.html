@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+    <title>Upload and View Your Results</title>
+</head>
+<body>
+
+    <button class="btn-default"><a href="{% url 'index' %}">back to main page</a></button>
+    <p></p>
+
+    <p>建议上传.jpg格式图片，否则可能出现错误</p>
+    {# uploading pics #}
+    <form enctype="multipart/form-data" action="{% url "upload" %}"  method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+        {{ field.label }}
+         {{ field }}
+    {% endfor %}
+    <br><br>
+    <button type="submit">upload</button>
+    </form>
+    <p></p>
+
+    {% if uploaded %}
+        <p>如下是你上传的图片：</p>
+        <img src="" alt="uploaded image" id="upload_pic">
+        <script>
+        // 使用ajax实时预览上传照片
+        let xmlHttp = new XMLHttpRequest();
+        xmlHttp.open('GET', '{% url 'image' pic_id %}', true);     // 异步获取图片
+        xmlHttp.responseType = "blob";  // 要求二进制流返回以显示图片
+        xmlHttp.send();
+
+        xmlHttp.onreadystatechange=function () {
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                // 从服务器以二进制流返回上传的图片结果
+                document.getElementById('upload_pic').src = URL.createObjectURL(xmlHttp.response)
+            }
+        }
+        </script>
+        <p></p>
+
+        <!-- 完成模型处理后检查返回结果 -->
+        <p id="processing">图像处理中……</p>
+        <img src="" alt="Image Processing..." id="process_pic">
+        <script>
+        // 使用ajax实时预览上传照片
+        let xml = new XMLHttpRequest();
+        console.log('request for results');
+        xml.open('GET', '{% url 'image_result' pic_id %}', true);     // 异步获取处理结果
+        xml.responseType = "blob";  // 要求二进制流返回以显示图片
+        xml.send();
+
+        xml.onreadystatechange=function () {
+            if (xml.readyState === 4 && xml.status === 200) {
+                // 从服务器以二进制流返回上传的图片结果
+                document.getElementById('processing').innerText = 'Detection处理结果如下：';
+                document.getElementById('process_pic').src = URL.createObjectURL(xml.response);
+            }
+        }
+        </script>
+
+        <p></p>
+        <p>在CIFAR-10数据集上训练的ResNet-18给出的分类预测结果如下：</p>
+        <p>{{ classification }}</p>
+        <p>（CIFAR-10数据集共有: plane, car, bird, cat, deer, dog, frog, horse, ship, truck十类）</p>
+
+    {% endif %}
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <title>register</title>
+</head>
+<body>
+
+<h1><a href="{% url 'index' %}">home page</a></h1>
+<h3>register</h3>
+<form class="form" action="{% url 'users:register' %}" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        {{ field.label_tag }}  {# 相應控件的label標籤 #}
+        {{ field }} {# 相應的表單控件 #}
+        {{ field.errors }} {# 表單錯誤的話 #}
+        {% if field.help_text %}
+            <p class="help text-small text-muted">{{ field.help_text|safe }}</p> {# 控件相關的幫助信息 #}
+        {% endif %}
+    {% endfor %}
+    <button type="submit" class="btn btn-primary btn-block">register</button>
+    <input type="hidden" name="next" value="{{ next }}"/>
+</form>
+<div class="flex-center top-gap text-small">
+    <a href="{% url 'login' %}">login</a>
+</div>
+
+</body>
+</html>
