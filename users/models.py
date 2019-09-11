@@ -41,6 +41,8 @@ class Pic(models.Model):
 	classification18 = models.TextField(blank=True)
 	# ResNet-152处理结果
 	classification152 = models.TextField(blank=True)
+	# todo: 添加另一种显示方法：分类为同一种的图片一起显示，类别数目从多到少
+	# todo: 如何储存人脸检测/识别结果？一张图只选一个脸，不存在脸路径为空？
 
 	timestamp = models.TextField()
 	url = models.URLField(blank=True)
