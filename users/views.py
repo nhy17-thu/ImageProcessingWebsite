@@ -109,11 +109,11 @@ def show_result(request, pic_id):
 		try:
 			pic = Pic.objects.get(pk=pic_id)
 			res_path = os.path.join("media/" + str(pic.res))
-			print(res_path)
+
 			while not os.path.exists(res_path):
 				# 每隔0.1秒检查一次输出文件是否存在，若已输出则返回相应结果
 				time.sleep(0.1)
-			print('test2')
+
 			with open(res_path, 'rb') as image:
 				image_data = image.read()
 			# 使用文件流，从服务器后台发送处理结果（二进制数据）到网页
@@ -301,6 +301,12 @@ def delete_batch(request):
 	return django.http.HttpResponse('批量删除成功！')
 
 
-# todo: 添加ResNet-152的大图多类别分类
+# todo: 在查询记录页面添加查看处理结果的功能（渲染新页面）
+def review_result():
+	pass
+
+
 # todo: 改变图片结果渲染方式，先渲染出前端网页以后再等待结果生成
+# todo: 添加ResNet-152的大图多类别分类
+# todo: 添加用于风格转换的深度神经网络
 

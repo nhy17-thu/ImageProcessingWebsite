@@ -81,7 +81,10 @@
                 upload time: {{ record.upload_time }}
             </td>
             <td>
-                <button><a href="{% url 'image' record.record_id %}" target="_blank">点击查看上传图片内容</a></button>
+                <button><a href="{% url 'image' record.record_id %}" target="_blank">查看上传图片</a></button>
+            </td>
+            <td>
+                <button><a href="{% url 'review_result' record.record_id %}" target="_blank">查看处理结果</a></button>
             </td>
             <td>
                 <button><a href="{% url 'delete' record.record_id %}">删除这条记录及相应图片</a></button>

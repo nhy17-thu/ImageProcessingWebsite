@@ -33,8 +33,15 @@ class Pic(models.Model):
 	username = models.CharField(max_length=50)
 	# upload_to 表圖片保存路徑
 	picture = models.ImageField(upload_to='pictures', blank=True)
-	# 處理結果
+	# Detection处理结果
 	res = models.ImageField(blank=True)
+	# 风格迁移处理结果
+	transfer = models.ImageField(blank=True)
+	# ResNet-18处理结果
+	classification18 = models.TextField(blank=True)
+	# ResNet-152处理结果
+	classification152 = models.TextField(blank=True)
+
 	timestamp = models.TextField()
 	url = models.URLField(blank=True)
 
