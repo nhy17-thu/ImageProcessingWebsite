@@ -56,41 +56,41 @@
 
 
         <!-- 完成模型处理后检查返回结果 -->
-        <p id="processing">图像处理中……</p>
-        <img src="" alt="Image Processing..." id="process_pic">
+        <p id="detection">图像Detection处理中……</p>
+        <img src="" alt="Image Processing..." id="detection_pic">
         <script>
         // 使用ajax传输Detection处理结果
-        let xml = new XMLHttpRequest();
-        console.log('request for results');
-        xml.open('GET', '{% url 'image_result' pic_id %}', true);     // 异步获取处理结果
-        xml.responseType = "blob";  // 要求二进制流返回以显示图片
-        xml.send();
+        let detectionXML = new XMLHttpRequest();
+        console.log('request for detection result');
+        detectionXML.open('GET', '{% url 'image_result' pic_id %}', true);     // 异步获取处理结果
+        detectionXML.responseType = "blob";  // 要求二进制流返回以显示图片
+        detectionXML.send();
 
-        xml.onreadystatechange=function () {
-            if (xml.readyState === 4 && xml.status === 200) {
+        detectionXML.onreadystatechange=function () {
+            if (detectionXML.readyState === 4 && detectionXML.status === 200) {
                 // 从服务器以二进制流返回上传的图片结果
-                document.getElementById('processing').innerText = 'Detection处理结果如下：';
-                document.getElementById('process_pic').src = URL.createObjectURL(xml.response);
+                document.getElementById('detection').innerText = 'Detection处理结果如下：';
+                document.getElementById('detection_pic').src = URL.createObjectURL(detectionXML.response);
             }
         }
         </script>
 
 
-        <p id="processing">图像处理中……</p>
-        <img src="" alt="Image Processing..." id="process_pic">
+        <p id="transfer">图像Style Transfer处理中……</p>
+        <img src="" alt="Image Processing..." id="transfer_pic">
         <script>
         // 使用ajax传输Transfer处理结果
-        let xml = new XMLHttpRequest();
-        console.log('request for results');
-        xml.open('GET', '{% url 'image_result_transfer' pic_id %}', true);     // 异步获取处理结果
-        xml.responseType = "blob";  // 要求二进制流返回以显示图片
-        xml.send();
+        let transferXML = new XMLHttpRequest();
+        console.log('request for style transfer result');
+        transferXML.open('GET', '{% url 'image_result_transfer' pic_id %}', true);     // 异步获取处理结果
+        transferXML.responseType = "blob";  // 要求二进制流返回以显示图片
+        transferXML.send();
 
-        xml.onreadystatechange=function () {
-            if (xml.readyState === 4 && xml.status === 200) {
+        transferXML.onreadystatechange=function () {
+            if (transferXML.readyState === 4 && transferXML.status === 200) {
                 // 从服务器以二进制流返回上传的图片结果
-                document.getElementById('processing').innerText = 'Detection处理结果如下：';
-                document.getElementById('process_pic').src = URL.createObjectURL(xml.response);
+                document.getElementById('transfer').innerText = 'Style Transfer处理结果如下：';
+                document.getElementById('transfer_pic').src = URL.createObjectURL(transferXML.response);
             }
         }
         </script>
@@ -98,15 +98,39 @@
 
         <p></p>
         <p>在CIFAR-10数据集上训练的ResNet-18给出的分类预测结果如下：</p>
-        <p>{{ classification18 }}</p>
+        <p id="class18">图像处理中……</p>
         <p>（CIFAR-10数据集共有: plane, car, bird, cat, deer, dog, frog, horse, ship, truck十类）</p>
+        <script>
+        let xml18 = new XMLHttpRequest();
+        console.log('request for ResNet-18 result');
+        xml18.open('GET', '{% url 'image_result_res18' pic_id %}', true);     // 异步获取处理结果
+        xml18.send();
+
+        xml18.onreadystatechange=function () {
+            if (xml18.readyState === 4 && xml18.status === 200) {
+                document.getElementById('class18').innerText = xml18.responseText;
+            }
+        }
+        </script>
 
 
         <!-- 显示ResNet-152处理结果 -->
         <!-- todo: 指定ResNet-152训练的使用数据集 -->
-        <p>在CIFAR-10数据集上训练的ResNet-18给出的分类预测结果如下：</p>
-        <p>{{ classification152 }}</p>
-        <p>（CIFAR-10数据集共有: plane, car, bird, cat, deer, dog, frog, horse, ship, truck十类）</p>
+        <p></p>
+        <p>ResNet-152给出的分类预测结果如下：</p>
+        <p id="class152">图像处理中……</p>
+        <script>
+        let xml152 = new XMLHttpRequest();
+        console.log('request for ResNet-152 result');
+        xml152.open('GET', '{% url 'image_result_res152' pic_id %}', true);     // 异步获取处理结果
+        xml152.send();
+
+        xml152.onreadystatechange=function () {
+            if (xml152.readyState === 4 && xml152.status === 200) {
+                document.getElementById('class152').innerText = xml152.responseText;
+            }
+        }
+        </script>
 
     {% endif %}
 

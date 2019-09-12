@@ -10,54 +10,54 @@
 </head>
 <body>
     <button class="btn-default"><a href="{% url 'checkRecords' 1 %}">back to records page</a></button>
-    <p></p>
 
 
     <!-- 显示Detection处理结果(AJAX) -->
+    <br />
     <p id="processing">图像Detection处理中……</p>
     <img src="" alt="Image Processing..." id="process_pic">
     <script>
     // 使用ajax实时预览上传照片
-    let xml = new XMLHttpRequest();
+    let detectionXML = new XMLHttpRequest();
     console.log('request for results');
-    xml.open('GET', '{% url 'image_result' pic_id %}', true);     // 异步获取处理结果
-    xml.responseType = "blob";  // 要求二进制流返回以显示图片
-    xml.send();
+    detectionXML.open('GET', '{% url 'image_result' pic_id %}', true);     // 异步获取处理结果
+    detectionXML.responseType = "blob";  // 要求二进制流返回以显示图片
+    detectionXML.send();
 
-    xml.onreadystatechange=function () {
-        if (xml.readyState === 4 && xml.status === 200) {
+    detectionXML.onreadystatechange=function () {
+        if (detectionXML.readyState === 4 && detectionXML.status === 200) {
             // 从服务器以二进制流返回上传的图片结果
             document.getElementById('processing').innerText = 'Detection处理结果如下：';
-            document.getElementById('process_pic').src = URL.createObjectURL(xml.response);
+            document.getElementById('process_pic').src = URL.createObjectURL(detectionXML.response);
         }
     }
     </script>
 
 
     <!-- 显示风格迁移处理结果(AJAX) -->
-    <p id="processing">图像Detection处理中……</p>
+    <br />
+    <p id="processing">图像Style Transfer处理中……</p>
     <img src="" alt="Image Processing..." id="process_pic">
     <script>
     // 使用ajax实时预览上传照片
-    let xml = new XMLHttpRequest();
+    let transferXML = new XMLHttpRequest();
     console.log('request for results');
-    xml.open('GET', '{% url 'image_result_transfer' pic_id %}', true);     // 异步获取处理结果
-    xml.responseType = "blob";  // 要求二进制流返回以显示图片
-    xml.send();
+    transferXML.open('GET', '{% url 'image_result_transfer' pic_id %}', true);     // 异步获取处理结果
+    transferXML.responseType = "blob";  // 要求二进制流返回以显示图片
+    transferXML.send();
 
-    xml.onreadystatechange=function () {
-        if (xml.readyState === 4 && xml.status === 200) {
+    transferXML.onreadystatechange=function () {
+        if (transferXML.readyState === 4 && transferXML.status === 200) {
             // 从服务器以二进制流返回上传的图片结果
             document.getElementById('processing').innerText = 'Detection处理结果如下：';
-            document.getElementById('process_pic').src = URL.createObjectURL(xml.response);
+            document.getElementById('process_pic').src = URL.createObjectURL(transferXML.response);
         }
     }
     </script>
 
 
     <!-- 显示ResNet-18处理结果 -->
-    <!-- todo: 用ajax获取结果 -->
-    <p></p>
+    <br />
     <p>在CIFAR-10数据集上训练的ResNet-18给出的分类预测结果如下：</p>
     <p>{{ classification18 }}</p>
     <p>（CIFAR-10数据集共有: plane, car, bird, cat, deer, dog, frog, horse, ship, truck十类）</p>
@@ -65,10 +65,9 @@
 
     <!-- 显示ResNet-152处理结果 -->
     <!-- todo: 制定ResNet-152训练的使用数据集 -->
-    <!-- todo: 用ajax获取结果 -->
-    <p>在CIFAR-10数据集上训练的ResNet-18给出的分类预测结果如下：</p>
+    <br />
+    <p>ResNet-152给出的分类预测结果如下：</p>
     <p>{{ classification152 }}</p>
-    <p>（CIFAR-10数据集共有: plane, car, bird, cat, deer, dog, frog, horse, ship, truck十类）</p>
 
 
 </body>

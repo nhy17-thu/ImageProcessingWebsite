@@ -59,7 +59,7 @@ def pic_delete(sender, instance, **kwargs):
 	# Pass false so FileField doesn't save the model.
 	instance.picture.delete(False)
 	instance.res.delete(False)
-
+	instance.transfer.delete(False)
 
 
 def create_modules(module_defs):

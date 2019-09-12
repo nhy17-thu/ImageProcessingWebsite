@@ -89,7 +89,7 @@ def show_pic(request, pic_id):
 	if request.session.get("has_login", False):
 		try:
 			pic = Pic.objects.get(pk=pic_id)
-			pic_path = os.path.join('media/', str(pic.picture))
+			pic_path = os.path.join('media', str(pic.picture))
 
 			with open(pic_path, 'rb') as image:
 				image_data = image.read()
@@ -107,7 +107,7 @@ def show_result(request, pic_id):
 	if request.session.get("has_login", False):
 		try:
 			pic = Pic.objects.get(pk=pic_id)
-			res_path = os.path.join("media/" + str(pic.res))
+			res_path = os.path.join('media', str(pic.res))
 
 			while not os.path.exists(res_path):
 				# 每隔0.1秒检查一次输出文件是否存在，若已输出则返回相应结果
@@ -129,7 +129,7 @@ def show_result_transfer(request, pic_id):
 	if request.session.get("has_login", False):
 		try:
 			pic = Pic.objects.get(pk=pic_id)
-			res_path = os.path.join("media/" + str(pic.transfer))
+			res_path = os.path.join('media', str(pic.transfer))
 
 			while not os.path.exists(res_path):
 				# 每隔0.1秒检查一次输出文件是否存在，若已输出则返回相应结果
@@ -149,13 +149,11 @@ def show_result_transfer(request, pic_id):
 def show_result_res18(request, pic_id):
 	if request.session.get("has_login", False):
 		try:
-			pic = Pic.objects.get(pk=pic_id)
-
-			while not len(pic.classification18):
+			while not Pic.objects.get(pk=pic_id).classification18:
 				# 每隔0.1秒检查一次输出结果是否存在，若已输出则返回相应结果
 				time.sleep(0.1)
 
-			return HttpResponse(pic.classification18)
+			return HttpResponse(Pic.objects.get(pk=pic_id).classification18)
 		except Exception as e:
 			print(e)
 			return HttpResponse(str(e))
@@ -166,13 +164,10 @@ def show_result_res18(request, pic_id):
 def show_result_res152(request, pic_id):
 	if request.session.get("has_login", False):
 		try:
-			pic = Pic.objects.get(pk=pic_id)
-
-			while not len(pic.classification152):
-				# 每隔0.1秒检查一次输出结果是否存在，若已输出则返回相应结果
+			while not Pic.objects.get(pk=pic_id).classification152:
 				time.sleep(0.1)
 
-			return HttpResponse(pic.classification152)
+			return HttpResponse(Pic.objects.get(pk=pic_id).classification152)
 		except Exception as e:
 			print(e)
 			return HttpResponse(str(e))
@@ -190,8 +185,8 @@ def check_records(request, page):
 				record_list.append({
 					'user': record.username,
 					'record_id': record.id,
-					'input_picture': str(record.picture),
-					'output_picture': str(record.res),
+					'input_picture': os.path.join('media', str(record.picture)),
+					'output_picture': os.path.join('media', str(record.res)),
 					'upload_time': record.timestamp
 				})
 
@@ -235,8 +230,8 @@ def search(request, page):
 					record_list.append({
 						'user': record.username,
 						'record_id': record.id,
-						'input_picture': str(record.picture),
-						'output_picture': str(record.res),
+						'input_picture': os.path.join('media', str(record.picture)),
+						'output_picture': os.path.join('media', str(record.res)),
 						'upload_time': record.timestamp
 					})
 
@@ -285,25 +280,24 @@ def upload_and_view(request):
 
 					if pic:
 						picture = pic
-						print(type(picture))
-						target_path = "media/pictures/" + picture.name
 
 					elif url:
 						path = "./media/pictures/"
 						pic_name = str(nowTime) + ".jpg"
 						urlretrieve(url, path + pic_name)
-						# pic_content = Pic.objects.create(timestamp=timestamp, username=username)
-						picture = "pictures/" + pic_name
-						target_path = "media/pictures/" + pic_name
+						picture = os.path.join('pictures', pic_name)
 					# print(picture)
 
 					pic_content = models.Pic.objects.create(timestamp=timestamp, username=username, picture=picture)
 
-					# todo: 添加深度神经网络处理结果
-
 					# 在前端网页渲染以后再进行图片处理，这里先指定路径
-					res = "pictures/" + target_path.split("/")[-1]
+					temp_path = str(str(picture).split('.')[0])
+					res = os.path.join('pictures', temp_path.split("/")[-1]) + '_res.jpg'
+					transfer = os.path.join('pictures', temp_path.split("/")[-1]) + '_transfer.jpg'
 					pic_content.res = res
+					pic_content.transfer = transfer
+					pic_content.classification18 = ''
+					pic_content.classification152 = ''
 					pic_content.save()
 					context['pic_id'] = pic_content.id
 					context['uploaded'] = True
@@ -330,9 +324,17 @@ def process_images(request, pic_id):
 		try:
 			pic = Pic.objects.get(id=pic_id)
 			# 对象检测Detection处理
-			func(pic.res)
+			func(os.path.join('media', str(pic.picture)))
+
+			# todo: Style Transfer处理
+
 			# 小图分类ResNet-18处理
-			pic.classification18 = classify_image(os.path.join('media', pic.picture))
+			pic.classification18 = classify_image(os.path.join('media', str(pic.picture)))
+
+			# todo: ResNet-152多类别分类
+
+			pic.save()  # 处理完了记得保存到数据库
+			return HttpResponse()
 
 		except ObjectDoesNotExist as e:
 			return HttpResponse(e)
