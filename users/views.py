@@ -17,7 +17,7 @@ import datetime
 from users.Object_Detection import func
 from users.Classification18 import classify_18
 from users.Classification152 import classify_152, imagenet_classes
-from users.Style_Transfer import transfer
+from users.neural_style import stylize
 
 import django.http
 import json
@@ -117,6 +117,7 @@ def show_result(request, pic_id):
 
 			with open(res_path, 'rb') as image:
 				image_data = image.read()
+
 			# 使用文件流，从服务器后台发送处理结果（二进制数据）到网页
 			return HttpResponse(image_data, content_type='image/png')
 		except Exception as e:
@@ -139,6 +140,7 @@ def show_result_transfer(request, pic_id):
 
 			with open(res_path, 'rb') as image:
 				image_data = image.read()
+
 			# 使用文件流，从服务器后台发送处理结果（二进制数据）到网页
 			return HttpResponse(image_data, content_type='image/png')
 		except Exception as e:
@@ -329,7 +331,7 @@ def process_images(request, pic_id):
 			func(os.path.join('media', str(pic.picture)))
 
 			# Style Transfer处理
-			transfer(os.path.join('media', str(pic.picture)))
+			stylize(os.path.join('media', str(pic.picture)))
 
 			# 小图分类ResNet-18处理
 			pic.classification18 = classify_18(os.path.join('media', str(pic.picture)))

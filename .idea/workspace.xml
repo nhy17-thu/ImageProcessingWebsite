@@ -2,8 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2318ba81-dbf8-4bdc-8793-ba18a897be0c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/media/pictures/ILSVRC2017_test_00000010.JPEG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/pictures/ILSVRC2017_test_00000026.JPEG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/pictures/ILSVRC2017_test_00000034.JPEG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/pictures/airplane1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users/neural_style.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users/neural_transfer/transformer_net.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users/neural_transfer/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users/neural_transfer/vgg.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/haoyuniu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/haoyuniu.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/users/check_record_byclass.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/check_record_byclass.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/users/review_result.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/review_result.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/Style_Transfer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -89,7 +100,7 @@
       <option name="presentableId" value="Default" />
       <updated>1568196762895</updated>
       <workItem from="1568196766675" duration="12088000" />
-      <workItem from="1568285771415" duration="14755000" />
+      <workItem from="1568285771415" duration="17836000" />
     </task>
     <servers />
   </component>

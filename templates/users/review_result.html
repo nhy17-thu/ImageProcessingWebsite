@@ -14,8 +14,8 @@
 
     <!-- 显示Detection处理结果(AJAX) -->
     <br />
-    <p id="processing">图像Detection处理中……</p>
-    <img src="" alt="Image Processing..." id="process_pic">
+    <p id="detection">图像Detection处理中……</p>
+    <img src="" alt="Image Processing..." id="detection_pic">
     <script>
     // 使用ajax实时预览上传照片
     let detectionXML = new XMLHttpRequest();
@@ -27,8 +27,8 @@
     detectionXML.onreadystatechange=function () {
         if (detectionXML.readyState === 4 && detectionXML.status === 200) {
             // 从服务器以二进制流返回上传的图片结果
-            document.getElementById('processing').innerText = 'Detection处理结果如下：';
-            document.getElementById('process_pic').src = URL.createObjectURL(detectionXML.response);
+            document.getElementById('detection').innerText = 'Detection处理结果如下：';
+            document.getElementById('detection_pic').src = URL.createObjectURL(detectionXML.response);
         }
     }
     </script>
@@ -36,8 +36,8 @@
 
     <!-- 显示风格迁移处理结果(AJAX) -->
     <br />
-    <p id="processing">图像Style Transfer处理中……</p>
-    <img src="" alt="Image Processing..." id="process_pic">
+    <p id="transfer">图像Style Transfer处理中……</p>
+    <img src="" alt="Image Processing..." id="transfer_pic">
     <script>
     // 使用ajax实时预览上传照片
     let transferXML = new XMLHttpRequest();
@@ -49,12 +49,11 @@
     transferXML.onreadystatechange=function () {
         if (transferXML.readyState === 4 && transferXML.status === 200) {
             // 从服务器以二进制流返回上传的图片结果
-            document.getElementById('processing').innerText = 'Detection处理结果如下：';
-            document.getElementById('process_pic').src = URL.createObjectURL(transferXML.response);
+            document.getElementById('transfer').innerText = 'Style Transfer处理结果如下：';
+            document.getElementById('transfer_pic').src = URL.createObjectURL(transferXML.response);
         }
     }
     </script>
-
 
     <!-- 显示ResNet-18处理结果 -->
     <br />
