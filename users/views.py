@@ -17,6 +17,7 @@ import datetime
 from users.Object_Detection import func
 from users.Classification18 import classify_18
 from users.Classification152 import classify_152, imagenet_classes
+from users.Style_Transfer import transfer
 
 import django.http
 import json
@@ -327,7 +328,8 @@ def process_images(request, pic_id):
 			# 对象检测Detection处理
 			func(os.path.join('media', str(pic.picture)))
 
-			# todo: Style Transfer处理
+			# Style Transfer处理
+			transfer(os.path.join('media', str(pic.picture)))
 
 			# 小图分类ResNet-18处理
 			pic.classification18 = classify_18(os.path.join('media', str(pic.picture)))
@@ -413,7 +415,6 @@ def check_records_byclass(request):
 		return HttpResponse("please login with your own session")
 
 
-# todo: 添加用于风格转换的深度神经网络
 # todo: 人脸识别系统，将结果记录到数据库并聚合：该用户上传的照片中的所有人脸
 # todo: 进阶功能：可以查询某个人在所有图片中出现了多少次（类似iPhone相册）
 
