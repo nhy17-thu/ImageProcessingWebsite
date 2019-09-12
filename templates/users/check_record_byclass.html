@@ -10,7 +10,8 @@
 </head>
 <body>
     <button class="btn-default"><a href="{% url 'index' %}">back to main page</a></button>
-    <p>本页面将按在ImageNet上训练的ResNet-152分类结果自动展示不同类别的上传图片，所有图片均支持右键在新窗口打开。</p>
+    <p>本页面将按在ImageNet上训练的ResNet-152分类结果，自动展示不同类别的上传图片。</p>
+    <p>出于浏览体验，所有图片均已调整尺寸，但均支持右键在新窗口打开原图。</p>
 
     <!-- 利用django按照分类显示所有图片 -->
     {% for key, value in content.items %}
