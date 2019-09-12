@@ -15,7 +15,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, Invali
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
 from users.Object_Detection import func
-from users.Classification import classify_image
+from users.Classification18 import classify_image
 
 import django.http
 import json
@@ -267,6 +267,9 @@ def upload_and_view(request):
 
 					pic_content = models.Pic.objects.create(timestamp=timestamp, username=username, picture=picture)
 
+					# todo: 添加深度神经网络处理结果
+
+					# todo: 把处理过程分离出来，在前端网页渲染以后再请求执行
 					res = func(target_path)
 					res = "pictures/" + res.split("/")[-1]
 					pic_content.res = res
@@ -288,6 +291,11 @@ def upload_and_view(request):
 	else:
 		return HttpResponse("please login with your own session")
 	return render(request, 'users/upload_and_view.html', context)
+
+
+# todo: 改变图片结果渲染方式，先渲染出前端网页，然后再等待结果生成
+def process_images(request, pic_id):
+	pass
 
 
 def delete(request, pic_id):
@@ -340,7 +348,6 @@ def review_result(request, pic_id):
 		return HttpResponse("please login with your own session")
 
 
-# todo: 改变图片结果渲染方式，先渲染出前端网页，然后再等待结果生成
 # todo: 添加ResNet-152的大图多类别分类
 # todo: 添加用于风格转换的深度神经网络
 # todo: 人脸识别系统，将结果记录到数据库并聚合：该用户上传的照片中的所有人脸

@@ -26,7 +26,16 @@
     </form>
     <p></p>
 
+
     {% if uploaded %}
+        <!-- 请求开始图片处理 -->
+        <script>
+        let startProcess = new XMLHttpRequest();
+        startProcess.open('GET', '{% url 'start_processing' pic_id %}', true);
+        startProcess.send();
+        </script>
+
+
         <p>如下是你上传的图片：</p>
         <img src="" alt="uploaded image" id="upload_pic">
         <script>
@@ -45,11 +54,12 @@
         </script>
         <p></p>
 
+
         <!-- 完成模型处理后检查返回结果 -->
         <p id="processing">图像处理中……</p>
         <img src="" alt="Image Processing..." id="process_pic">
         <script>
-        // 使用ajax实时预览上传照片
+        // 使用ajax传输Detection处理结果
         let xml = new XMLHttpRequest();
         console.log('request for results');
         xml.open('GET', '{% url 'image_result' pic_id %}', true);     // 异步获取处理结果
@@ -64,6 +74,27 @@
             }
         }
         </script>
+
+
+        <p id="processing">图像处理中……</p>
+        <img src="" alt="Image Processing..." id="process_pic">
+        <script>
+        // 使用ajax传输Transfer处理结果
+        let xml = new XMLHttpRequest();
+        console.log('request for results');
+        xml.open('GET', '{% url 'image_result_transfer' pic_id %}', true);     // 异步获取处理结果
+        xml.responseType = "blob";  // 要求二进制流返回以显示图片
+        xml.send();
+
+        xml.onreadystatechange=function () {
+            if (xml.readyState === 4 && xml.status === 200) {
+                // 从服务器以二进制流返回上传的图片结果
+                document.getElementById('processing').innerText = 'Detection处理结果如下：';
+                document.getElementById('process_pic').src = URL.createObjectURL(xml.response);
+            }
+        }
+        </script>
+
 
         <p></p>
         <p>在CIFAR-10数据集上训练的ResNet-18给出的分类预测结果如下：</p>

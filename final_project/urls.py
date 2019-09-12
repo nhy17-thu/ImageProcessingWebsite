@@ -29,10 +29,12 @@ urlpatterns = [
 	url(r'^media/(?P<path>.*)', serve, {"document_root": MEDIA_ROOT}),
 	url(r'^show_pic/(\d+)', views.show_pic, name='image'),
 	url(r'^show_result/(\d+)', views.show_result, name='image_result'),
+	url(r'^show_result_transfer/(\d+)', views.show_result_transfer, name='image_result_transfer'),
 	url(r'^check_records/(\d+)', views.check_records, name='checkRecords'),
 	url(r'^search/(\d+)', views.search, name='search'),
 	url(r'^upload/', views.upload_and_view, name='upload'),
 	url(r'^delete/(\d+)', views.delete, name='delete'),
 	url(r'^delete_batch/', views.delete_batch, name='delete_batch'),
 	url(r'^review_result/(\d+)', views.review_result, name='review_result'),
+	url(r'^request_process/(\d+)', views.process_images, name='start_processing'),
 ]
