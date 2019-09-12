@@ -21,6 +21,8 @@
     <button class="btn-default"><a href="{% url 'upload' %}">Upload Your Photos & See Results</a> </button>
     <p></p>
     <button class="btn-default"><a href="{% url 'checkRecords' 1 %}">Check & Manage Your Records</a></button>
+    <p></p>
+    <button class="btn-default"><a href="{% url 'checkByClass' %}">Check Your Records by Classes</a></button>
 
 {% else %}
     <p>you haven't logged in

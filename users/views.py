@@ -15,7 +15,8 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, Invali
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
 from users.Object_Detection import func
-from users.Classification18 import classify_image
+from users.Classification18 import classify_18
+from users.Classification152 import classify_152, imagenet_classes
 
 import django.http
 import json
@@ -329,9 +330,10 @@ def process_images(request, pic_id):
 			# todo: Style Transfer处理
 
 			# 小图分类ResNet-18处理
-			pic.classification18 = classify_image(os.path.join('media', str(pic.picture)))
+			pic.classification18 = classify_18(os.path.join('media', str(pic.picture)))
 
-			# todo: ResNet-152多类别分类
+			# ResNet-152 1000类分类
+			pic.classification152 = classify_152(os.path.join('media', str(pic.picture)))
 
 			pic.save()  # 处理完了记得保存到数据库
 			return HttpResponse()
@@ -392,7 +394,25 @@ def review_result(request, pic_id):
 		return HttpResponse("please login with your own session")
 
 
-# todo: 添加ResNet-152的大图多类别分类
+# 根据ResNet-152分类的结果返回图片id
+def check_records_byclass(request):
+	if request.session.get("has_login", False):
+		try:
+			content = {}
+			for num, value in imagenet_classes.items():
+				content[value] = []
+				for pic in Pic.objects.filter(classification152__contains=value):
+					content[value].append(pic.id)
+
+			return render(request, 'users/check_record_byclass.html', {'content': content})
+		except ObjectDoesNotExist as e:
+			return HttpResponse(e)
+		except Exception as e:
+			return HttpResponse(e)
+	else:
+		return HttpResponse("please login with your own session")
+
+
 # todo: 添加用于风格转换的深度神经网络
 # todo: 人脸识别系统，将结果记录到数据库并聚合：该用户上传的照片中的所有人脸
 # todo: 进阶功能：可以查询某个人在所有图片中出现了多少次（类似iPhone相册）

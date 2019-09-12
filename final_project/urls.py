@@ -46,4 +46,5 @@ urlpatterns = [
 	url(r'^review_result/(\d+)', views.review_result, name='review_result'),
 	# 响应前端指令，开始处理图片
 	url(r'^request_process/(\d+)', views.process_images, name='start_processing'),
+	url(r'^check_records_byclass/', views.check_records_byclass, name='checkByClass'),
 ]

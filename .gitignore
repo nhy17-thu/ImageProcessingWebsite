@@ -122,3 +122,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 users/config/yolov3.weights
+*.jpg
+*.pth

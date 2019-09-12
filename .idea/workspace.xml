@@ -2,9 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2318ba81-dbf8-4bdc-8793-ba18a897be0c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/haoyuniu.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/users/check_record_byclass.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users/Classification152.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/final_project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/final_project/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/users/review_result.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/review_result.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/users/upload_and_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/upload_and_view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/Classification18.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/Classification18.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
     </list>
@@ -18,6 +25,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -91,7 +99,7 @@
       <option name="presentableId" value="Default" />
       <updated>1568196762895</updated>
       <workItem from="1568196766675" duration="12088000" />
-      <workItem from="1568285771415" duration="5959000" />
+      <workItem from="1568285771415" duration="12968000" />
     </task>
     <servers />
   </component>

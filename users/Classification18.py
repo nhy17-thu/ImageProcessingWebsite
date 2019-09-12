@@ -19,7 +19,7 @@ tran = transforms.Compose([
 ])
 
 
-def classify_image(image):
+def classify_18(image):
 	# 加载训练好的ResNet-18模型
 	net = ResNet18()
 	net.load_state_dict(torch.load('users/config/resnet18.pth', map_location=device))

@@ -38,7 +38,6 @@ class Pic(models.Model):
 	# 风格迁移处理结果
 	transfer = models.ImageField(blank=True)
 	# ResNet-18处理结果
-	# todo: 添加另一种显示方法：CIFAR10分类为同一种的图片一起显示，类内图片数从多到少
 	classification18 = models.TextField(blank=True)
 	# ResNet-152处理结果
 	classification152 = models.TextField(blank=True)
