@@ -27,14 +27,23 @@ urlpatterns = [
 	# url(r'^save_profile/', views.save_pic, name='save_pic'),
 	# url(r'^static/(?P<path>.*)', serve, {"document_root": STATIC_ROOT}),
 	url(r'^media/(?P<path>.*)', serve, {"document_root": MEDIA_ROOT}),
+
 	url(r'^show_pic/(\d+)', views.show_pic, name='image'),
+	# 获取detection结果
 	url(r'^show_result/(\d+)', views.show_result, name='image_result'),
+	# 获取transfer结果
 	url(r'^show_result_transfer/(\d+)', views.show_result_transfer, name='image_result_transfer'),
+	# 获取ResNet18十分类结果
+	url(r'^show_result_res18/(\d+)', views.show_result_res18, name='image_result_res18'),
+	# 获取ResNet152分类结果
+	url(r'^show_result_res152/(\d+)', views.show_result_res152, name='image_result_res152'),
+
 	url(r'^check_records/(\d+)', views.check_records, name='checkRecords'),
 	url(r'^search/(\d+)', views.search, name='search'),
 	url(r'^upload/', views.upload_and_view, name='upload'),
 	url(r'^delete/(\d+)', views.delete, name='delete'),
 	url(r'^delete_batch/', views.delete_batch, name='delete_batch'),
 	url(r'^review_result/(\d+)', views.review_result, name='review_result'),
+	# 响应前端指令，开始处理图片
 	url(r'^request_process/(\d+)', views.process_images, name='start_processing'),
 ]

@@ -146,6 +146,40 @@ def show_result_transfer(request, pic_id):
 		return HttpResponse("please login with your own session")
 
 
+def show_result_res18(request, pic_id):
+	if request.session.get("has_login", False):
+		try:
+			pic = Pic.objects.get(pk=pic_id)
+
+			while not len(pic.classification18):
+				# 每隔0.1秒检查一次输出结果是否存在，若已输出则返回相应结果
+				time.sleep(0.1)
+
+			return HttpResponse(pic.classification18)
+		except Exception as e:
+			print(e)
+			return HttpResponse(str(e))
+	else:
+		return HttpResponse("please login with your own session")
+
+
+def show_result_res152(request, pic_id):
+	if request.session.get("has_login", False):
+		try:
+			pic = Pic.objects.get(pk=pic_id)
+
+			while not len(pic.classification152):
+				# 每隔0.1秒检查一次输出结果是否存在，若已输出则返回相应结果
+				time.sleep(0.1)
+
+			return HttpResponse(pic.classification152)
+		except Exception as e:
+			print(e)
+			return HttpResponse(str(e))
+	else:
+		return HttpResponse("please login with your own session")
+
+
 # 使用AJAX动态返回表单
 def check_records(request, page):
 	if request.session.get("has_login", False):
@@ -253,7 +287,6 @@ def upload_and_view(request):
 						picture = pic
 						print(type(picture))
 						target_path = "media/pictures/" + picture.name
-						context['classification'] = classify_image(picture)
 
 					elif url:
 						path = "./media/pictures/"
@@ -262,16 +295,14 @@ def upload_and_view(request):
 						# pic_content = Pic.objects.create(timestamp=timestamp, username=username)
 						picture = "pictures/" + pic_name
 						target_path = "media/pictures/" + pic_name
-						context['classification'] = classify_image("media/" + picture)
 					# print(picture)
 
 					pic_content = models.Pic.objects.create(timestamp=timestamp, username=username, picture=picture)
 
 					# todo: 添加深度神经网络处理结果
 
-					# todo: 把处理过程分离出来，在前端网页渲染以后再请求执行
-					res = func(target_path)
-					res = "pictures/" + res.split("/")[-1]
+					# 在前端网页渲染以后再进行图片处理，这里先指定路径
+					res = "pictures/" + target_path.split("/")[-1]
 					pic_content.res = res
 					pic_content.save()
 					context['pic_id'] = pic_content.id
@@ -293,9 +324,20 @@ def upload_and_view(request):
 	return render(request, 'users/upload_and_view.html', context)
 
 
-# todo: 改变图片结果渲染方式，先渲染出前端网页，然后再等待结果生成
+# 响应前端网页的结果，开始处理并生成结果
 def process_images(request, pic_id):
-	pass
+	if request.session.get("has_login", False):
+		try:
+			pic = Pic.objects.get(id=pic_id)
+			# 对象检测Detection处理
+			func(pic.res)
+			# 小图分类ResNet-18处理
+			pic.classification18 = classify_image(os.path.join('media', pic.picture))
+
+		except ObjectDoesNotExist as e:
+			return HttpResponse(e)
+	else:
+		return HttpResponse("please login with your own session")
 
 
 def delete(request, pic_id):

@@ -6,8 +6,6 @@
       <change beforePath="$PROJECT_DIR$/final_project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/final_project/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/users/review_result.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/review_result.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/users/upload_and_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/upload_and_view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/Classification.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/Classification18.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -92,7 +90,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1568196762895</updated>
-      <workItem from="1568196766675" duration="10584000" />
+      <workItem from="1568196766675" duration="12088000" />
+      <workItem from="1568285771415" duration="262000" />
     </task>
     <servers />
   </component>
@@ -104,7 +103,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
