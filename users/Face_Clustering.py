@@ -22,7 +22,7 @@ def face_cluster(input_images):
 		img = dlib.load_rgb_image(image['path'])
 		# 检测人脸数量和位置
 		faces = detector(img, 1)
-		print(f'{len(faces)} faces detected in', image['path'])
+		# print(f'{len(faces)} faces detected in', image['path'])
 
 		# 遍历所有人脸
 		for face in faces:
@@ -35,9 +35,8 @@ def face_cluster(input_images):
 
 	# CW聚类算法进行人脸聚类
 	labels = dlib.chinese_whispers_clustering(descriptors, 0.5)
-	print(labels)
 	num_classes = len(set(labels))
-	print(f'{num_classes} Classes Detected')
+	# print(f'{num_classes} Classes Detected')
 
 	# 根据标签构造分类字典
 	clusters = [[] for _ in range(num_classes)]
@@ -59,7 +58,7 @@ def face_cluster(input_images):
 
 			# 将每个输出路径记录在返回结果中
 			faces_path[str(i)] = []
-			print(f'Output: {cluster_folder_path}')
+			# print(f'Output: {cluster_folder_path}')
 
 			for j, pair in enumerate(cluster):
 				img, shape, image, pic_id = pair
@@ -74,7 +73,7 @@ def face_cluster(input_images):
 					'pic_id': pic_id
 				})
 
-	print(faces_path)
+	# print(faces_path)
 	return faces_path
 
 

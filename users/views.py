@@ -464,7 +464,7 @@ def check_records_byclass(request):
 		return HttpResponse("please login with your own session")
 
 
-# dlib实现人脸聚类功能
+# 利用dlib实现人脸聚类功能，输出不同人脸的对应图片
 def check_records_byface(request):
 	if request.session.get("has_login", False):
 		pic_list = []
