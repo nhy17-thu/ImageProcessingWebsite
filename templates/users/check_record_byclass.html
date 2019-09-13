@@ -11,17 +11,19 @@
 <body>
     <button class="btn-default"><a href="{% url 'index' %}">back to main page</a></button>
     <p>本页面将按在ImageNet上训练的ResNet-152分类结果，自动展示不同类别的上传图片。</p>
-    <p>出于浏览体验，所有图片均已调整尺寸，但均支持右键在新窗口打开原图。</p>
+    <p>出于浏览体验考虑，所有图片均已调整尺寸，但均支持右键在新窗口打开原图。</p>
 
     <!-- 利用django按照分类显示所有图片 -->
+    <!-- 在每张照片旁附有点击删除/查看所有处理结果的按钮 -->
     {% for key, value in content.items %}
         {% if value %}
             <p>如下是ResNet-152分类为 {{ key }} 的所有图像：</p>
-            <p>
             {% for id in value %}
-                <img src="{% url 'image' id %}" alt="{{ key }}" height="200" width="300">
+                <p><img src="{% url 'image' id %}" alt="{{ key }}" height="300" width="400"></p>
+                <button><a href="{% url 'review_result' id %}" target="_blank">查看对应处理结果</a></button>
+                <button><a href="{% url 'delete' id %}">删除这条记录及相应图片</a></button>
+                <p> </p>
             {% endfor %}
-            </p>
         {% endif %}
     {% endfor %}
 

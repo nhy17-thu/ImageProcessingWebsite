@@ -124,3 +124,4 @@ dmypy.json
 users/config/yolov3.weights
 *.jpg
 *.pth
+*.JPEG
