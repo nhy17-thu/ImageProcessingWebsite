@@ -19,7 +19,7 @@
         <p>如下是自动编号为{{ folder_num }}的人的所有图片：</p>
         {% for pic in pics %}
             <p>
-            <img src="{% url 'show_face_pic' folder_num pic.number %}" alt="{{ pic.pic_id }}">
+            <img src="{% url 'show_face_pic' folder_num pic.number pic.pic_id %}" alt="{{ pic.pic_id }}">
             <img src="{% url 'image' pic.pic_id %}" alt="{{ pic.pic_id }}" height="200" width="300">
                 <button><a href="{% url 'review_result' pic.pic_id %}" target="_blank">查看对应处理结果</a></button>
                 <button><a href="{% url 'delete' pic.pic_id %}">删除这条记录及相应图片</a></button>

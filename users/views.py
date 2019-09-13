@@ -108,12 +108,12 @@ def show_pic(request, pic_id):
 		return HttpResponse("please login with your own session")
 
 
-def show_face_pic(request, folder_id, pic_id):
+def show_face_pic(request, folder_num, pic_num, pic_id):
 	if request.session.get("has_login", False):
 		if request.user.username != Pic.objects.get(id=pic_id).username:
 			return HttpResponse('Please request results for your own pictures ONLY!')
 		try:
-			pic_path = os.path.join('media', 'faces', str(folder_id), f'face_{pic_id}.jpg')
+			pic_path = os.path.join('media', 'faces', str(folder_num), f'face_{pic_num}.jpg')
 
 			with open(pic_path, 'rb') as image:
 				image_data = image.read()

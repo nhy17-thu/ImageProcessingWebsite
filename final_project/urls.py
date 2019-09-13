@@ -51,6 +51,6 @@ urlpatterns = [
 	url(r'^check_records_byclass/', views.check_records_byclass, name='checkByClass'),
 	# 执行人脸聚类操作并在新页面浏览结果
 	url(r'^check_records_byface/', views.check_records_byface, name='checkByFace'),
-	# 返回裁剪后的脸部图片，参数依次为文件夹编号/图片编号
-	url(r'show_face_pic/(\d+)/(\d+)', views.show_face_pic, name='show_face_pic'),
+	# 返回裁剪后的脸部图片，参数依次为文件夹编号/图片编号/图片id
+	url(r'show_face_pic/(\d+)/(\d+)/(\d+)', views.show_face_pic, name='show_face_pic'),
 ]
