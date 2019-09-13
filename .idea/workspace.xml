@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2318ba81-dbf8-4bdc-8793-ba18a897be0c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/users/face_clustering_result.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/face_clustering_result.html" afterDir="false" />
-    </list>
+    <list default="true" id="2318ba81-dbf8-4bdc-8793-ba18a897be0c" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +90,7 @@
       <updated>1568196762895</updated>
       <workItem from="1568196766675" duration="12088000" />
       <workItem from="1568285771415" duration="20558000" />
-      <workItem from="1568356764724" duration="15782000" />
+      <workItem from="1568356764724" duration="15910000" />
     </task>
     <servers />
   </component>
