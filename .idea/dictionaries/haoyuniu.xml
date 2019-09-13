@@ -2,6 +2,7 @@
   <dictionary name="haoyuniu">
     <words>
       <w>byclass</w>
+      <w>byface</w>
       <w>cuda</w>
       <w>dlib</w>
       <w>imagenet</w>

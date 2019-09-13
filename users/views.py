@@ -19,6 +19,7 @@ from users.Classification18 import classify_18
 from users.Classification152 import classify_152, imagenet_classes
 from users.neural_style import stylize
 from users.Face_Detection import face_detect
+from users.Face_Clustering import face_cluster
 
 import django.http
 import json
@@ -93,6 +94,22 @@ def show_pic(request, pic_id):
 		try:
 			pic = Pic.objects.get(pk=pic_id)
 			pic_path = os.path.join('media', str(pic.picture))
+
+			with open(pic_path, 'rb') as image:
+				image_data = image.read()
+			# 使用文件流，从服务器后台发送图片（二进制数据）到网页
+			return django.http.HttpResponse(image_data, content_type='image/png')
+		except Exception as e:
+			print(e)
+			return django.http.HttpResponse(str(e))
+	else:
+		return HttpResponse("please login with your own session")
+
+
+def show_face_pic(request, folder_id, pic_id):
+	if request.session.get("has_login", False):
+		try:
+			pic_path = os.path.join('media', 'faces', str(folder_id), f'face_{pic_id}.jpg')
 
 			with open(pic_path, 'rb') as image:
 				image_data = image.read()
@@ -447,5 +464,21 @@ def check_records_byclass(request):
 		return HttpResponse("please login with your own session")
 
 
-# todo: 进阶功能：可以查询某个人在所有图片中出现了多少次（类似iPhone相册）
+# dlib实现人脸聚类功能
+def check_records_byface(request):
+	if request.session.get("has_login", False):
+		pic_list = []
+		for pic in Pic.objects.all():
+			pic_list.append({
+				'path': os.path.join('media', str(pic.picture)),
+				'id': pic.id
+			})
 
+		# 执行人脸聚类操作并返回所有输出图片路径
+		# 字典键为文件夹编号，值为输出图片信息组成的数组（详见Face_Clustering.py）
+		faces_path = face_cluster(pic_list)
+
+		# 在模版页面上展示所有不同人脸的结果
+		return render(request, 'users/face_clustering_result.html', {'faces_path': faces_path})
+	else:
+		return HttpResponse("please login with your own session")

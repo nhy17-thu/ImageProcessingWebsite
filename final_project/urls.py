@@ -49,4 +49,8 @@ urlpatterns = [
 	# 响应前端指令，开始处理图片
 	url(r'^request_process/(\d+)', views.process_images, name='start_processing'),
 	url(r'^check_records_byclass/', views.check_records_byclass, name='checkByClass'),
+	# 执行人脸聚类操作并在新页面浏览结果
+	url(r'^check_records_byface/', views.check_records_byface, name='checkByFace'),
+	# 返回裁剪后的脸部图片，参数依次为文件夹编号/图片编号
+	url(r'show_face_pic/(\d+)/(\d+)', views.show_face_pic, name='show_face_pic'),
 ]

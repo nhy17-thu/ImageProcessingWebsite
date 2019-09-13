@@ -13,7 +13,7 @@
     <button class="btn-default"><a href="{% url 'index' %}">back to main page</a></button>
     <p></p>
 
-    <p>建议上传.jpg格式图片，否则可能出现错误</p>
+    <p>建议上传.jpg格式图片，大小不超过500KB，否则可能出现错误</p>
     {# uploading pics #}
     <form enctype="multipart/form-data" action="{% url "upload" %}"  method="POST">
     {% csrf_token %}

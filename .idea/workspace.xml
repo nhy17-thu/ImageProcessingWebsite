@@ -2,15 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2318ba81-dbf8-4bdc-8793-ba18a897be0c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/test_images/歼20.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/users/Face_Detection.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/users/migrations/0006_pic_faces.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/users/face_clustering_result.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users/Face_Clustering.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users/config/dlib_face_recognition_resnet_model_v1.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users/config/shape_predictor_5_face_landmarks.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users/config/shape_predictor_68_face_landmarks.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dictionaries/haoyuniu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/haoyuniu.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/final_project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/final_project/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/users/review_result.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/review_result.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/users/check_record_byclass.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/check_record_byclass.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/users/upload_and_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/upload_and_view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,8 +27,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -101,7 +103,7 @@
       <updated>1568196762895</updated>
       <workItem from="1568196766675" duration="12088000" />
       <workItem from="1568285771415" duration="20558000" />
-      <workItem from="1568356764724" duration="2363000" />
+      <workItem from="1568356764724" duration="11656000" />
     </task>
     <servers />
   </component>
