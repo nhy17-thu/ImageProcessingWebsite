@@ -91,6 +91,8 @@ def login(request):
 
 def show_pic(request, pic_id):
 	if request.session.get("has_login", False):
+		if request.user.username != Pic.objects.get(id=pic_id).username:
+			return HttpResponse('Please request results for your own pictures ONLY!')
 		try:
 			pic = Pic.objects.get(pk=pic_id)
 			pic_path = os.path.join('media', str(pic.picture))
@@ -108,6 +110,8 @@ def show_pic(request, pic_id):
 
 def show_face_pic(request, folder_id, pic_id):
 	if request.session.get("has_login", False):
+		if request.user.username != Pic.objects.get(id=pic_id).username:
+			return HttpResponse('Please request results for your own pictures ONLY!')
 		try:
 			pic_path = os.path.join('media', 'faces', str(folder_id), f'face_{pic_id}.jpg')
 
@@ -125,6 +129,8 @@ def show_face_pic(request, folder_id, pic_id):
 # 展示id对应图片的Detection处理结果
 def show_result(request, pic_id):
 	if request.session.get("has_login", False):
+		if request.user.username != Pic.objects.get(id=pic_id).username:
+			return HttpResponse('Please request results for your own pictures ONLY!')
 		try:
 			pic = Pic.objects.get(pk=pic_id)
 			res_path = os.path.join('media', str(pic.res))
@@ -148,6 +154,8 @@ def show_result(request, pic_id):
 # 展示id对应图片的风格迁移结果
 def show_result_transfer(request, pic_id):
 	if request.session.get("has_login", False):
+		if request.user.username != Pic.objects.get(id=pic_id).username:
+			return HttpResponse('Please request results for your own pictures ONLY!')
 		try:
 			pic = Pic.objects.get(pk=pic_id)
 			res_path = os.path.join('media', str(pic.transfer))
@@ -171,6 +179,8 @@ def show_result_transfer(request, pic_id):
 # 展示id对应图片的人脸识别结果，一张图中所有人脸
 def show_result_faces(request, pic_id):
 	if request.session.get("has_login", False):
+		if request.user.username != Pic.objects.get(id=pic_id).username:
+			return HttpResponse('Please request results for your own pictures ONLY!')
 		try:
 			pic = Pic.objects.get(pk=pic_id)
 			res_path = os.path.join('media', str(pic.faces))
@@ -193,6 +203,8 @@ def show_result_faces(request, pic_id):
 
 def show_result_res18(request, pic_id):
 	if request.session.get("has_login", False):
+		if request.user.username != Pic.objects.get(id=pic_id).username:
+			return HttpResponse('Please request results for your own pictures ONLY!')
 		try:
 			while not Pic.objects.get(pk=pic_id).classification18:
 				# 每隔0.1秒检查一次输出结果是否存在，若已输出则返回相应结果
@@ -208,6 +220,8 @@ def show_result_res18(request, pic_id):
 
 def show_result_res152(request, pic_id):
 	if request.session.get("has_login", False):
+		if request.user.username != Pic.objects.get(id=pic_id).username:
+			return HttpResponse('Please request results for your own pictures ONLY!')
 		try:
 			while not Pic.objects.get(pk=pic_id).classification152:
 				time.sleep(0.1)
@@ -368,6 +382,8 @@ def upload_and_view(request):
 # 响应前端网页的结果，开始处理并生成结果
 def process_images(request, pic_id):
 	if request.session.get("has_login", False):
+		if request.user.username != Pic.objects.get(id=pic_id).username:
+			return HttpResponse('Please request results for your own pictures ONLY!')
 		try:
 			pic = Pic.objects.get(id=pic_id)
 			pic_path = os.path.join('media', str(pic.picture))
@@ -397,6 +413,8 @@ def process_images(request, pic_id):
 
 def delete(request, pic_id):
 	if request.session.get("has_login", False):
+		if request.user.username != Pic.objects.get(id=pic_id).username:
+			return HttpResponse('Please request deletion for your own pictures ONLY!')
 		try:
 			# 不保存关联的图像文件，将其一起删除
 			Pic.objects.get(id=pic_id).delete()
@@ -429,6 +447,8 @@ def delete_batch(request):
 # 渲染新页面以查看所有处理结果
 def review_result(request, pic_id):
 	if request.session.get("has_login", False):
+		if request.user.username != Pic.objects.get(id=pic_id).username:
+			return HttpResponse('Please request results for your own pictures ONLY!')
 		try:
 			pic = Pic.objects.get(id=pic_id)
 			context = {
@@ -453,7 +473,8 @@ def check_records_byclass(request):
 			for num, value in imagenet_classes.items():
 				content[value] = []
 				for pic in Pic.objects.filter(classification152__contains=value):
-					content[value].append(pic.id)
+					if pic.username == request.user.username:
+						content[value].append(pic.id)
 
 			return render(request, 'users/check_record_byclass.html', {'content': content})
 		except ObjectDoesNotExist as e:
@@ -469,14 +490,17 @@ def check_records_byface(request):
 	if request.session.get("has_login", False):
 		pic_list = []
 		for pic in Pic.objects.all():
-			pic_list.append({
-				'path': os.path.join('media', str(pic.picture)),
-				'id': pic.id
-			})
+			if pic.username == request.user.username:
+				pic_list.append({
+					'path': os.path.join('media', str(pic.picture)),
+					'id': pic.id
+				})
 
 		# 执行人脸聚类操作并返回所有输出图片路径
 		# 字典键为文件夹编号，值为输出图片信息组成的数组（详见Face_Clustering.py）
 		faces_path = face_cluster(pic_list)
+		# 受sqlite3特性限制，在数据表中存储数组/字典型数据将有较大困难
+		# 因此选择在每一次打开人脸聚类页面时都即时演算所有图片，并将结果即时传送给前端页面
 
 		# 在模版页面上展示所有不同人脸的结果
 		return render(request, 'users/face_clustering_result.html', {'faces_path': faces_path})
