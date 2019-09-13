@@ -2,17 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2318ba81-dbf8-4bdc-8793-ba18a897be0c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/media/pictures/ILSVRC2017_test_00000023.JPEG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/pictures/ILSVRC2017_test_00000034.JPEG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test_images/歼20.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users/Face_Detection.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users/migrations/0006_pic_faces.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/haoyuniu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/haoyuniu.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/users/check_record_byclass.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/check_record_byclass.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/final_project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/final_project/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/users/review_result.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/review_result.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/users/upload_and_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/upload_and_view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -42,7 +50,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="pyconsole" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -92,7 +100,8 @@
       <option name="presentableId" value="Default" />
       <updated>1568196762895</updated>
       <workItem from="1568196766675" duration="12088000" />
-      <workItem from="1568285771415" duration="19671000" />
+      <workItem from="1568285771415" duration="20558000" />
+      <workItem from="1568356764724" duration="2363000" />
     </task>
     <servers />
   </component>

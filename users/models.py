@@ -41,7 +41,8 @@ class Pic(models.Model):
 	classification18 = models.TextField(blank=True)
 	# ResNet-152处理结果
 	classification152 = models.TextField(blank=True)
-	# todo: 如何储存人脸检测/识别结果？一张图只选一个脸，不存在脸路径为空？
+	# 储存人脸检测结果：将多个单张人脸合并为一张图
+	faces = models.ImageField(blank=True)
 
 	timestamp = models.TextField()
 	url = models.URLField(blank=True)
@@ -59,6 +60,7 @@ def pic_delete(sender, instance, **kwargs):
 	instance.picture.delete(False)
 	instance.res.delete(False)
 	instance.transfer.delete(False)
+	instance.faces.delete(False)
 
 
 def create_modules(module_defs):

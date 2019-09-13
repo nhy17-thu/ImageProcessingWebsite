@@ -18,6 +18,7 @@ from users.Object_Detection import func
 from users.Classification18 import classify_18
 from users.Classification152 import classify_152, imagenet_classes
 from users.neural_style import stylize
+from users.Face_Detection import face_detect
 
 import django.http
 import json
@@ -133,6 +134,29 @@ def show_result_transfer(request, pic_id):
 		try:
 			pic = Pic.objects.get(pk=pic_id)
 			res_path = os.path.join('media', str(pic.transfer))
+
+			while not os.path.exists(res_path):
+				# 每隔0.1秒检查一次输出文件是否存在，若已输出则返回相应结果
+				time.sleep(0.1)
+
+			with open(res_path, 'rb') as image:
+				image_data = image.read()
+
+			# 使用文件流，从服务器后台发送处理结果（二进制数据）到网页
+			return HttpResponse(image_data, content_type='image/png')
+		except Exception as e:
+			print(e)
+			return HttpResponse(str(e))
+	else:
+		return HttpResponse("please login with your own session")
+
+
+# 展示id对应图片的人脸识别结果，一张图中所有人脸
+def show_result_faces(request, pic_id):
+	if request.session.get("has_login", False):
+		try:
+			pic = Pic.objects.get(pk=pic_id)
+			res_path = os.path.join('media', str(pic.faces))
 
 			while not os.path.exists(res_path):
 				# 每隔0.1秒检查一次输出文件是否存在，若已输出则返回相应结果
@@ -298,8 +322,10 @@ def upload_and_view(request):
 					temp_path = str(str(picture).split('.')[0])
 					res = os.path.join('pictures', temp_path.split("/")[-1]) + '_res.jpg'
 					transfer = os.path.join('pictures', temp_path.split("/")[-1]) + '_transfer.jpg'
+					faces = os.path.join('pictures', temp_path.split("/")[-1]) + '_faces.jpg'
 					pic_content.res = res
 					pic_content.transfer = transfer
+					pic_content.faces = faces
 					pic_content.classification18 = ''
 					pic_content.classification152 = ''
 					pic_content.save()
@@ -327,17 +353,21 @@ def process_images(request, pic_id):
 	if request.session.get("has_login", False):
 		try:
 			pic = Pic.objects.get(id=pic_id)
+			pic_path = os.path.join('media', str(pic.picture))
 			# 对象检测Detection处理
-			func(os.path.join('media', str(pic.picture)))
+			func(pic_path)
 
 			# Style Transfer处理
-			stylize(os.path.join('media', str(pic.picture)))
+			stylize(pic_path)
 
 			# 小图分类ResNet-18处理
-			pic.classification18 = classify_18(os.path.join('media', str(pic.picture)))
+			pic.classification18 = classify_18(pic_path)
 
 			# ResNet-152 1000类分类
-			pic.classification152 = classify_152(os.path.join('media', str(pic.picture)))
+			pic.classification152 = classify_152(pic_path)
+
+			# dlib实现正面人脸检测
+			face_detect(pic_path)
 
 			pic.save()  # 处理完了记得保存到数据库
 			return HttpResponse()
@@ -417,6 +447,5 @@ def check_records_byclass(request):
 		return HttpResponse("please login with your own session")
 
 
-# todo: 人脸识别系统，将结果记录到数据库并聚合：该用户上传的照片中的所有人脸
 # todo: 进阶功能：可以查询某个人在所有图片中出现了多少次（类似iPhone相册）
 

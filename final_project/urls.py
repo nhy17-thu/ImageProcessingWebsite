@@ -37,6 +37,8 @@ urlpatterns = [
 	url(r'^show_result_res18/(\d+)', views.show_result_res18, name='image_result_res18'),
 	# 获取ResNet152分类结果
 	url(r'^show_result_res152/(\d+)', views.show_result_res152, name='image_result_res152'),
+	# 获取人脸识别结果
+	url(r'^show_result_faces/(\d+)', views.show_result_faces, name='image_result_faces'),
 
 	url(r'^check_records/(\d+)', views.check_records, name='checkRecords'),
 	url(r'^search/(\d+)', views.search, name='search'),

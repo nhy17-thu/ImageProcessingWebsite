@@ -36,7 +36,7 @@
 
     <!-- 显示风格迁移处理结果(AJAX) -->
     <br />
-    <p id="transfer">图像Style Transfer处理中……（图像较大时处理可能较慢，请耐心等待或至查询记录页面查看结果）</p>
+    <p id="transfer">图像Style Transfer处理中……</p>
     <img src="" alt="Image Processing..." id="transfer_pic">
     <script>
     // 使用ajax实时预览上传照片
@@ -67,6 +67,31 @@
     <p>在ImageNet数据集上训练的ResNet-152给出的分类预测结果如下：</p>
     <p>{{ classification152 }}</p>
     <p>（ImageNet数据集共有1000类）</p>
+
+
+    <p id="face_detect">图像人脸识别处理中……</p>
+    <img src="" alt="Image Processing..." id="face_detect_pic">
+    <script>
+    // 使用ajax传输Transfer处理结果
+    let facesXML = new XMLHttpRequest();
+    console.log('request for face detection result');
+    facesXML.open('GET', '{% url 'image_result_faces' pic_id %}', true);     // 异步获取处理结果
+    facesXML.responseType = "blob";  // 要求二进制流返回以显示图片
+    facesXML.send();
+
+    facesXML.onreadystatechange=function () {
+        if (facesXML.readyState === 4 && facesXML.status === 200) {
+            // 从服务器以二进制流返回上传的图片结果
+            if (facesXML.response.size) {
+                document.getElementById('face_detect').innerText = '上传图像中所有正面人脸如下：';
+                document.getElementById('face_detect_pic').src = URL.createObjectURL(facesXML.response);
+            } else {
+                document.getElementById('face_detect').innerText = '上传图像中没有检测到正面人脸。';
+                document.getElementById('face_detect_pic').remove();
+            }
+        }
+    }
+    </script>
 
 
 </body>
